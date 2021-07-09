@@ -805,9 +805,9 @@
                 };
             }
             function setMapCanvasSizing($canvas, width, height) {
-                /**
-                 * TODO Task 2. Опишите функцию которая задаст размеры игрового поля
-                 */
+
+                $canvas.width = width;
+                $canvas.height = height;
                 return $canvas;
             }
             function drawMapField(canvas, map, width, height, cellSize) {
@@ -894,24 +894,24 @@
                     /**
                      * TODO Task 4. Вместо event.keyCode начните использовать event.key
                      */
-                    switch (event.keyCode) {
-                        case 32:
-                            event.preventDefault();
+                    switch (event.keydown) {
+                        case ' ': 
+                            event.preventDefault(); 
                             this.state.game.stopMoving();
                             break;
-                        case 37:
+                        case 'ArrowLeft':
                             event.preventDefault();
                             this.state.game.beginMove(GameApi.MoveDirection.left);
                             break;
-                        case 38:
+                        case 'ArrowUp':
                             event.preventDefault();
                             this.state.game.beginMove(GameApi.MoveDirection.top);
                             break;
-                        case 39:
+                        case 'ArrowRight':
                             event.preventDefault();
                             this.state.game.beginMove(GameApi.MoveDirection.right);
                             break;
-                        case 40:
+                        case 'ArrowDown':
                             event.preventDefault();
                             this.state.game.beginMove(GameApi.MoveDirection.bottom);
                             break;
