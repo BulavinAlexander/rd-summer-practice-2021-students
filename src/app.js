@@ -805,9 +805,9 @@
                 };
             }
             function setMapCanvasSizing($canvas, width, height) {
-                /**
-                 * TODO Task 2. Опишите функцию которая задаст размеры игрового поля
-                 */
+
+                $canvas.width = width;
+                $canvas.height = height;
                 return $canvas;
             }
             function drawMapField(canvas, map, width, height, cellSize) {
