@@ -13,6 +13,11 @@ div {
 
 #TitleGameId {
     width: 100%;
+    text-align: center;
+}
+
+#TimerGameId {
+    text-align: center;
 }
 
 .HeaderTextColor {
@@ -96,4 +101,5 @@ div {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+}
 }

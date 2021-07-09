@@ -758,50 +758,50 @@
                  *  можно использовать $('selector')
                  */
                 return {
-                    // $gameCaption: ,
-                    // $switchTimer: ,
-                    // team1: {
-                    //     $container: ,
-                    //     $caption: ,
-                    //     $players: ,
-                    //     $lives: ,
-                    //     $coins:
-                    // },
-                    // team2: {
-                    //     $container: ,
-                    //     $caption: ,
-                    //     $players: ,
-                    //     $lives: ,
-                    //     $coins:
-                    // },
-                    // mapBuffer: null,
-                    // $mapCanvas: ,
-                    // mapCellSize: 25
+                    $gameCaption: $('GameCaptionId'),
+                    $switchTimer: $('TimerGameId'),
+                    team1: {
+                        $container: $('team1-container'),
+                        $caption: $('team1-caption'),
+                     //   $players: ,
+                        $lives: $('team1-head'),
+                        $coins: $('team1-coin')
+                    },
+                    team2: {
+                        $container: $('team2-container'),
+                        $caption: $('team2-caption'),
+                    //      $players: ,
+                        $lives : $('team2-head'),
+                        $coins: $('team2-coin')
+                    },
+                    mapBuffer: null,
+                    $mapCanvas: $('canvas'),
+                    mapCellSize: 25
                 };
             }
             function getButtons() {
                 // TODO Task1.2 Объявление переменных и их связка с DOM
                 return {
-                    // $btnGameList:,
-                    // $btnStart:,
-                    // $btnConnect:,
-                    // $btnConnectPolice:,
-                    // $btnConnectThief:,
-                    // $btnLeave:,
-                    // $btnPause:,
-                    // $btnCancel:
+                    $btnGameList: $('btnGameList'),
+                    $btnStart: $('btnStart'),
+                    $btnConnect: $('btnConnect'),
+                    $btnConnectPolice: $('btnConnectPolice'),
+                    $btnConnectThief: $('btnConnectThief'),
+                    $btnLeave: $('btnLeave'),
+                    $btnPause: $('btnPause'),
+                    $btnCancel: $('btnCancel')
                 };
             }
             function getImages() {
                 // TODO Task1.3 Объявление переменных и их связка с DOM
                 return {
-                    // imgHeart: ,
-                    // imgCoin: ,
-                    // imgPolice: ,
-                    // imgPoliceSelf: ,
-                    // imgThief: ,
-                    // imgThiefSelf: ,
-                    // imgSwitch:
+                    imgHeart: $('img_heart'),
+                    imgCoin: $('img_coin'),
+                    imgPolice: $('img_police'),
+                    imgPoliceSelf: $('img_police_self'),
+                    imgThief: $('img_thief'),
+                    imgThiefSelf: $('img_thief_self'),
+                    imgSwitch: $('img_switch')
                 };
             }
             function setMapCanvasSizing($canvas, width, height) {
@@ -861,32 +861,91 @@
                  *              повешайте обработчики событий на кнопки
                  *              нажатия на кнопки это событие click
                  */
-                // var c = this.state.callbacks;
-                // c.captionChanged
+                var c = this.state.callbacks;
+                
                 // c.invalidGame
-                // c.mapChanged
-                // c.playerChanged
-                // c.statusChanged
+
+                c.captionChanged.add(function (name, status){
+                    this.setGameCaption(name, status);
+                }.bind(this));
+                
+                c.mapChanged.add(function (width, height){
+                    this.setMapCanvasSizing($mapCanvas, width, height);
+                }.bind(this));
+
+                c.playerChanged.add(function (id, stats){
+                    this.updatePlayerStats(id, stats);
+                }.bind(this));
+
+                c.statusChanged.add(function (status){
+                    this.setStatus(status);
+                }.bind(this));
+
                 // c.synced
                 // c.syncing
-                // c.teamCaptionChanged
-                // c.teamCoinsChanged
-                // c.teamLivesChanged
+
+                c.teamCaptionChanged.add(function (team, $team){
+                    this.setTeamCaption(team, $team);
+                }.bind(this));
+
+                c.teamCoinsChanged.add(function (id, coins){
+                    this.setTeamCoins(id, coins);
+                }.bind(this));
+
+                c.teamLivesChanged.add(function (id, lives){
+                    this.setTeamLives(id, lives);
+                }.bind(this));
+                    
                 // c.teamPlayersChanged
-                // c.timerChanged
+
+                c.timerChanged.add(function (date){
+                    this.setTimer(date);
+                }.bind(this));
             };
             GameView.prototype.bindButtons = function () {
                 // TODO Task 3.1 повешайте обработчики событий
-                // var btns = this.btns;
-                // var $lastKey = -1;
-                // btns.$btnGameList.
-                // btns.$btnStart.
-                // btns.$btnConnect.
-                // btns.$btnConnectPolice.
-                // btns.$btnConnectThief.
-                // btns.$btnLeave.
-                // btns.$btnPause.
-                // btns.$btnCancel.
+                var btns = this.btns;
+                var $lastKey = -1;
+
+                btns.$btnGameList.click(function () {
+                    window.location.replace("index.html");
+                });
+
+                btns.$btnStart.click(function () {
+                this.state.game.start();
+                }.bind(this));
+
+                btns.$btnConnect.click(function () {
+                    this.state.game.join(GameApi.GameTeamRole.random);
+                }.bind(this));
+                  thief
+
+                btns.$btnConnectPolice.click(function () {
+                    this.state.game.join(GameApi.GameTeamRole.police);
+                }.bind(this));
+
+                btns.$btnConnectThief.click(function () {
+                    this.state.game.join(GameApi.GameTeamRole.thief);
+                }.bind(this));
+
+                btns.$btnLeave.click(
+                    function () {
+                      this.state.game.leave();
+                    }.bind(this)
+                  );
+
+                btns.$btnPause.click(
+                    function () {
+                        this.state.game.pause();
+                    }.bind(this)
+                );
+
+                btns.$btnCancel.click(
+                function () {
+                    this.state.game.cancel();
+                }.bind(this)
+                );
+
                 $(window).on('keydown', function(event) {
                     if ($lastKey === event.keyCode) {
                         return;
@@ -894,28 +953,28 @@
                     /**
                      * TODO Task 4. Вместо event.keyCode начните использовать event.key
                      */
-                    switch (event.keyCode) {
-                        case 32:
+                     switch (event.keydown) {
+                        case ' ':
                             event.preventDefault();
                             this.state.game.stopMoving();
                             break;
-                        case 37:
+                        case 'ArrowLeft':
                             event.preventDefault();
                             this.state.game.beginMove(GameApi.MoveDirection.left);
                             break;
-                        case 38:
+                        case 'ArrowUp':
                             event.preventDefault();
                             this.state.game.beginMove(GameApi.MoveDirection.top);
                             break;
-                        case 39:
+                        case 'ArrowRight':
                             event.preventDefault();
                             this.state.game.beginMove(GameApi.MoveDirection.right);
                             break;
-                        case 40:
+                        case 'ArrowDown':
                             event.preventDefault();
                             this.state.game.beginMove(GameApi.MoveDirection.bottom);
                             break;
-                    }
+                        }
                     //console.log(event);
                 }.bind(this));
                 $(window).on('keyup', function() {
