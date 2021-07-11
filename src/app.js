@@ -863,7 +863,9 @@
                  */
                 var c = this.state.callbacks;
                 
-                // c.invalidGame
+                c.invalidGame.add(function () {
+                    this.showError();
+                }.bind(this));
 
                 c.captionChanged.add(function (name, status){
                     this.setGameCaption(name, status);
@@ -881,8 +883,13 @@
                     this.setStatus(status);
                 }.bind(this));
 
-                // c.synced
-                // c.syncing
+                c.synced.add(function () {
+                    this.show();
+                }.bind(this));
+
+                c.syncing.add(function () {
+                    this.showLoading();
+                }.bind(this));
 
                 c.teamCaptionChanged.add(function (team, $team){
                     this.setTeamCaption(team, $team);
@@ -896,7 +903,9 @@
                     this.setTeamLives(id, lives);
                 }.bind(this));
                     
-                // c.teamPlayersChanged
+                c.teamPlayersChanged.add(function (team) {
+                     this.updateTeam(team);
+                 }.bind(this));
 
                 c.timerChanged.add(function (date){
                     this.setTimer(date);
