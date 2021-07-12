@@ -758,50 +758,50 @@
                  *  можно использовать $('selector')
                  */
                 return {
-                    $gameCaption: $('GameCaptionId'),
-                    $switchTimer: $('TimerGameId'),
+                    $gameCaption: $('#GameCaptionId'),
+                    $switchTimer: $('#TimerGameId'),
                     team1: {
-                        $container: $('team1-container'),
-                        $caption: $('team1-caption'),
+                        $container: $('#team1-container'),
+                        $caption: $('#team1-caption'),
                      //   $players: ,
-                        $lives: $('team1-head'),
-                        $coins: $('team1-coin')
+                        $lives: $('#team1-head'),
+                        $coins: $('#team1-coin')
                     },
                     team2: {
-                        $container: $('team2-container'),
-                        $caption: $('team2-caption'),
+                        $container: $('#team2-container'),
+                        $caption: $('#team2-caption'),
                     //      $players: ,
-                        $lives : $('team2-head'),
-                        $coins: $('team2-coin')
+                        $lives : $('#team2-head'),
+                        $coins: $('#team2-coin')
                     },
                     mapBuffer: null,
-                    $mapCanvas: $('canvas'),
+                    $mapCanvas: $('#canvas'),
                     mapCellSize: 25
                 };
             }
             function getButtons() {
                 // TODO Task1.2 Объявление переменных и их связка с DOM
                 return {
-                    $btnGameList: $('btnGameList'),
-                    $btnStart: $('btnStart'),
-                    $btnConnect: $('btnConnect'),
-                    $btnConnectPolice: $('btnConnectPolice'),
-                    $btnConnectThief: $('btnConnectThief'),
-                    $btnLeave: $('btnLeave'),
-                    $btnPause: $('btnPause'),
-                    $btnCancel: $('btnCancel')
+                    $btnGameList: $('#btnGameList'),
+                    $btnStart: $('#btnStart'),
+                    $btnConnect: $('#btnConnect'),
+                    $btnConnectPolice: $('#btnConnectPolice'),
+                    $btnConnectThief: $('#btnConnectThief'),
+                    $btnLeave: $('#btnLeave'),
+                    $btnPause: $('#btnPause'),
+                    $btnCancel: $('#btnCancel')
                 };
             }
             function getImages() {
                 // TODO Task1.3 Объявление переменных и их связка с DOM
                 return {
-                    imgHeart: $('img_heart'),
-                    imgCoin: $('img_coin'),
-                    imgPolice: $('img_police'),
-                    imgPoliceSelf: $('img_police_self'),
-                    imgThief: $('img_thief'),
-                    imgThiefSelf: $('img_thief_self'),
-                    imgSwitch: $('img_switch')
+                    imgHeart: $('#img_heart'),
+                    imgCoin: $('#img_coin'),
+                    imgPolice: $('#img_police'),
+                    imgPoliceSelf: $('#img_police_self'),
+                    imgThief: $('#img_thief'),
+                    imgThiefSelf: $('#img_thief_self'),
+                    imgSwitch: $('#img_switch')
                 };
             }
             function setMapCanvasSizing($canvas, width, height) {
@@ -1143,10 +1143,12 @@
                 $team.$caption
                     .empty()
                     .append(app.utils.t(
-                        "<div class='game-team-{role}-caption'>" +
+                        "<td class='game-team-{role}-caption'>" +
                             "<span class='game-team-name'>{name}</span> " +
+                        "</td>" +
+                        "<td>"+
                             "<span class='game-team-role game-team-role-{role}'>{roleName}</span>" +
-                        "</div>", {
+                        "</td", {
                             role: role,
                             roleName: team.role === GameApi.GameTeamRole.police ? "полиция" : "мошенники",
                             name: team.name
