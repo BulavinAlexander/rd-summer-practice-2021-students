@@ -3,7 +3,7 @@
 
 <head lang="en">
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="app.css" />
+    <link rel="stylesheet" href="style.css" />
     <!--  TODO: Раскомментировать при начале работы с сервером -->
         <script src="modernizr.js"></script>
         <script src="/js/jquery.js"></script>
@@ -88,7 +88,7 @@
     go8L3N2Zz4="/>
     </div>
     <h1 id ="TitleGameId" class="HeaderTextColor">Полицейские и мошенники</h1>
-    <div class="TitleGameClass HeaderTextColor"><span id ="GameCaptionId">Название:</span><span id="GameStatusId">статус</span></div>
+    <div class="HeaderTextColor"><span id ="GameCaptionId">Название:</span></div>
     <h1 class="HeaderTextColor" id ="TimerGameId">00:00</h1>
     <div class="container">
         <div class="side-panel">
@@ -111,6 +111,11 @@
                     <td>Монеты:</td>
                     <td>
                         <strong id="team1-coin">3</strong>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <div id="team1-players"></div>
                     </td>
                 </tr>
             </table>
@@ -140,6 +145,11 @@
                     <td>Монеты:</td>
                     <td>
                         <strong id="team2-coin">3</strong>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <div id="team2-players"></div>
                     </td>
                 </tr>
             </table>

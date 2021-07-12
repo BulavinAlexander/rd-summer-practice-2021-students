@@ -758,57 +758,61 @@
                  *  можно использовать $('selector')
                  */
                 return {
-                    $gameCaption: $('#GameCaptionId'),
-                    $switchTimer: $('#TimerGameId'),
-                    team1: {
-                        $container: $('#team1-container'),
-                        $caption: $('#team1-caption'),
-                     //   $players: ,
-                        $lives: $('#team1-head'),
-                        $coins: $('#team1-coin')
+                     $gameCaption:$('#GameCaptionId') ,
+                     $switchTimer:$('#TimerGameId') ,
+                      team1: {
+                     $container:$('#container_team1') ,
+                     $caption:$('#team1-caption'),
+                     $players:$('#team1-players') ,
+                     $lives:$('#team1-head') ,
+                    $coins:$('#team2-coin')
                     },
-                    team2: {
-                        $container: $('#team2-container'),
-                        $caption: $('#team2-caption'),
-                    //      $players: ,
-                        $lives : $('#team2-head'),
-                        $coins: $('#team2-coin')
-                    },
+                      team2: {
+                    $container:$('#team2container') ,
+                    $caption:$('#team2-caption') ,
+                    $players:$('#team2-players') ,
+                    $lives:$('#team2-head') ,
+                    $coins:$('#team2-coin')
+                     },
                     mapBuffer: null,
-                    $mapCanvas: $('#canvas'),
+                    $mapCanvas:$('#canvas') ,
                     mapCellSize: 25
                 };
             }
             function getButtons() {
                 // TODO Task1.2 Объявление переменных и их связка с DOM
                 return {
-                    $btnGameList: $('#btnGameList'),
-                    $btnStart: $('#btnStart'),
-                    $btnConnect: $('#btnConnect'),
-                    $btnConnectPolice: $('#btnConnectPolice'),
-                    $btnConnectThief: $('#btnConnectThief'),
-                    $btnLeave: $('#btnLeave'),
-                    $btnPause: $('#btnPause'),
-                    $btnCancel: $('#btnCancel')
+                    $btnGameList:$('#btnGameList'),
+                    $btnStart:$('#btnStart'),
+                    $btnConnect:$('#btnConnect'),
+                    $btnConnectPolice:$('#btnConnectPolice'),
+                    $btnConnectThief:$('#btnConnectThief'),
+                    $btnLeave:$('#btnLeave'),
+                    $btnPause:$('#btnPause'),
+                    $btnCancel:$('#btnCancel')
                 };
             }
             function getImages() {
                 // TODO Task1.3 Объявление переменных и их связка с DOM
                 return {
-                    imgHeart: $('#img_heart'),
-                    imgCoin: $('#img_coin'),
-                    imgPolice: $('#img_police'),
-                    imgPoliceSelf: $('#img_police_self'),
-                    imgThief: $('#img_thief'),
-                    imgThiefSelf: $('#img_thief_self'),
-                    imgSwitch: $('#img_switch')
+                     imgHeart:$('#img_heart').get(0) ,
+                     imgCoin:$('#img_coin').get(0) ,
+                     mgPolice: $('#img_police').get(0),
+                     imgPoliceSelf:$('#img_police_self').get(0),
+                     imgThief:$('#img_thief').get(0),
+                     imgThiefSelf:$('#img_thief_self').get(0),
+                     imgSwitch:$('#img_switch').get(0)
                 };
             }
             function setMapCanvasSizing($canvas, width, height) {
-
-                $canvas.width = width;
-                $canvas.height = height;
-                return $canvas;
+                /**
+                 * TODO Task 2. Опишите функцию которая задаст размеры игрового поля
+                 */
+                
+                return $canvas.css("width", width + "px")
+                .css("height", height + "px")
+                .attr("width", width + "px")
+                .attr("height", height + "px");
             }
             function drawMapField(canvas, map, width, height, cellSize) {
                 var ctx = canvas.getContext("2d");
@@ -861,99 +865,88 @@
                  *              повешайте обработчики событий на кнопки
                  *              нажатия на кнопки это событие click
                  */
-                var c = this.state.callbacks;
-                
-                c.invalidGame.add(function () {
-                    this.showError();
-                }.bind(this));
-
-                c.captionChanged.add(function (name, status){
-                    this.setGameCaption(name, status);
-                }.bind(this));
-                
-                c.mapChanged.add(function (map) {
-                    this.updateMap(map);
-                }.bind(this));
-
-                c.playerChanged.add(function (id, stats){
-                    this.updatePlayerStats(id, stats);
-                }.bind(this));
-
-                c.statusChanged.add(function (status){
-                    this.setStatus(status);
-                }.bind(this));
-
-                c.synced.add(function () {
-                    this.show();
-                }.bind(this));
-
-                c.syncing.add(function () {
-                    this.showLoading();
-                }.bind(this));
-
-                c.teamCaptionChanged.add(function (team, $team){
-                    this.setTeamCaption(team, $team);
-                }.bind(this));
-
-                c.teamCoinsChanged.add(function (id, coins){
-                    this.setTeamCoins(id, coins);
-                }.bind(this));
-
-                c.teamLivesChanged.add(function (id, lives){
-                    this.setTeamLives(id, lives);
-                }.bind(this));
-                    
-                c.teamPlayersChanged.add(function (team) {
-                     this.updateTeam(team);
+                 
+                 var c = this.state.callbacks;
+                 c.captionChanged.add(function (name, status){
+                     this.setGameCaption(name, status);
                  }.bind(this));
 
-                c.timerChanged.add(function (date){
-                    this.setTimer(date);
-                }.bind(this));
+                 c.invalidGame.add(function () {
+                     this.showError();
+                 }.bind(this));
+
+                 c.mapChanged.add(function (map) {
+                     this.updateMap(map);
+                 }.bind(this));
+
+                 c.playerChanged.add(function (player) {
+                     this.updatePlayer(player);
+                 }.bind(this));
+
+                 c.statusChanged.add(function (status) {
+                     this.setButtons(status);
+                     this.toggleRotation(status);
+                 }.bind(this));
+
+                 c.synced.add(function () {
+                     this.show();
+                 }.bind(this));
+
+                 c.syncing.add(function () {
+                     this.showLoading();
+                 }.bind(this));
+
+                 c.teamCaptionChanged.add(function (team) {
+                     this.updateTeamCaption(team);
+                 }.bind(this));
+
+                 c.teamCoinsChanged.add(function (team) {
+                     this.updateTeamCoins(team);
+                 }.bind(this));
+
+                 c.teamLivesChanged.add(function (team) {
+                     this.updateTeamLives(team);
+                 }.bind(this));
+
+                 c.teamPlayersChanged.add(function (team) {
+                     this.updateTeam(team);
+                 }.bind(this));
+                 
+                 c.timerChanged.add(function (data) {
+                     this.setTimer(data);
+                 }.bind(this));
             };
             GameView.prototype.bindButtons = function () {
                 // TODO Task 3.1 повешайте обработчики событий
+
                 var btns = this.btns;
                 var $lastKey = -1;
 
                 btns.$btnGameList.click(function () {
                     window.location.replace("index.html");
-                });
+                    });
 
                 btns.$btnStart.click(function () {
-                this.state.game.start();
+                       this.state.game.start();
                 }.bind(this));
-
                 btns.$btnConnect.click(function () {
                     this.state.game.join(GameApi.GameTeamRole.random);
                 }.bind(this));
-                  thief
-
                 btns.$btnConnectPolice.click(function () {
                     this.state.game.join(GameApi.GameTeamRole.police);
                 }.bind(this));
-
                 btns.$btnConnectThief.click(function () {
                     this.state.game.join(GameApi.GameTeamRole.thief);
                 }.bind(this));
-
-                btns.$btnLeave.click(
-                    function () {
-                      this.state.game.leave();
-                    }.bind(this)
-                  );
-
-                btns.$btnPause.click(
-                    function () {
-                        this.state.game.pause();
-                    }.bind(this)
-                );
-
-                btns.$btnCancel.click(
-                function () {
+                btns.$btnLeave.click(function () {
+                    this.state.game.leave();
+                }.bind(this));
+                btns.$btnPause.click(function () {
+                    this.state.game.pause();
+                }.bind(this));
+                btns.$btnCancel.click(function () {
                     this.state.game.cancel();
-                }.bind(this)
-                );
+                }.bind(this));
 
                 $(window).on('keydown', function(event) {
                     if ($lastKey === event.keyCode) {
@@ -962,8 +955,8 @@
                     /**
                      * TODO Task 4. Вместо event.keyCode начните использовать event.key
                      */
-                     switch (event.keydown) {
-                        case ' ':
+                    switch (event.key) {
+                        case 'Spacebar':
                             event.preventDefault();
                             this.state.game.stopMoving();
                             break;
@@ -983,8 +976,8 @@
                             event.preventDefault();
                             this.state.game.beginMove(GameApi.MoveDirection.bottom);
                             break;
-                        }
-                    //console.log(event);
+                    }
+                    console.log(event);
                 }.bind(this));
                 $(window).on('keyup', function() {
                     $lastKey = -1;
@@ -1078,7 +1071,8 @@
                 this.game.$gameCaption
                     .empty()
                     .append($(app.utils.t(
-                        "<div class='TitleGameClass HeaderTextColor'><span id ='GameCaptionId'>{name}</span><span id='GameStatusId'>{status}</span></div>",
+                            "<span class='game-caption-status'>{name}</span>"+
+                            "<span class='game-caption-status game-caption-status-{status}'> : {statusName}</span>",
                         {name: name, status: status, statusName: app.utils.getStatusName(status)})));
             };
             GameView.prototype.setTimer = function (data) {
@@ -1105,12 +1099,12 @@
                  * TODO: Task 6. Поменяйте под вашу вёрстку
                  */
                 return $(app.utils.t(
-                    "<div id='player{playerId}' class='game-player game-player-status-{status}'>" +
-                        "<span class='game-player-name'>{name}</span>" +
-                        " [<span class='game-player-coins'>{coins}</span>;" +
-                        "<span class='game-player-lives'>{lives}</span>;" +
-                        "<span class='game-player-deaths'>{deaths}</span>]" +
-                    "</div>", {
+                    " <div id='player{playerId}' class='game-player game-player-status-{status}'>" +
+                   "    <span class='game-player-name'>{name}</span>" +
+                   "    <span class='game-player-coins'>{coins}</span>" +
+                   "    <span class='game-player-lives'>{lives}</span>" +
+                   "    <span class='game-player-deaths'>{deaths}</span>" +
+                   "</div>",{
                     playerId: player.id,
                     status: status,
                     name: player.name,
@@ -1143,12 +1137,12 @@
                 $team.$caption
                     .empty()
                     .append(app.utils.t(
-                        "<td class='game-team-{role}-caption'>" +
-                            "<span class='game-team-name'>{name}</span> " +
-                        "</td>" +
+                        "<td class='game-team-{role}-caption'>"+
+                            "<span class='game-team-name'>{name}</span>"+
+                        "</td>"+
                         "<td>"+
-                            "<span class='game-team-role game-team-role-{role}'>{roleName}</span>" +
-                        "</td", {
+                            "<span class='game-team-role game-team-role-{role}'> {roleName}</span>"+
+                        "</td>", {
                             role: role,
                             roleName: team.role === GameApi.GameTeamRole.police ? "полиция" : "мошенники",
                             name: team.name
@@ -1258,21 +1252,31 @@
                      btns.$btnConnectThief.addClass("hidden");
                      btns.$btnConnectPolice.addClass("hidden");
                  }
+                
             };
             GameView.prototype.showLoading = function () {
-                this.$container.addClass("hidden");
-                this.$error.addClass("hidden");
-                this.$loading.removeClass("hidden");
+                /**
+                 * TODO: Task 9. Опишите доступность элементов при загрузке игры $container $error $loading
+                 */
+                 this.$container.addClass("hidden");
+                 this.$error.addClass("hidden");
+                 this.$loading.removeClass("hidden");
             };
             GameView.prototype.showError = function () {
-                this.$container.addClass("hidden");
-                this.$loading.addClass("hidden");
-                this.$error.removeClass("hidden");
+                /**
+                 * TODO: Task 10. Опишите доступность элементов при загрузке игры $container $error $loading
+                 */
+                 this.$container.addClass("hidden");
+                 this.$loading.addClass("hidden");
+                 this.$error.removeClass("hidden");
             };
             GameView.prototype.show = function () {
-                this.$loading.addClass("hidden");
-                this.$error.addClass("hidden");
-                this.$container.removeClass("hidden");
+                /**
+                 * TODO: Task 11. Опишите доступность элементов при загрузке игры $container $error $loading
+                 */
+                 this.$loading.addClass("hidden");
+                 this.$error.addClass("hidden");
+                 this.$container.removeClass("hidden");
             };
 
             return GameView;

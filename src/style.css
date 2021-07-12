@@ -11,6 +11,26 @@ div {
     background-color: #454545;
 }
 
+.game-player {
+    border-radius: 0px;
+    padding: 2px 2px;
+    background-color: rgba(201, 201, 201, 0.692);; 
+}
+
+.game-player-coins {
+    background-color: #dfca13; 
+    padding: 2px 2px;
+}
+.game-player-lives{
+    background-color: #b42626; 
+    padding: 2px 2px;
+}
+.game-player-deaths {
+    background-color: #000000; 
+    padding: 2px 2px;
+    color: white;
+}
+
 #map {
     display: flex;
     justify-content: center;
@@ -87,7 +107,7 @@ div {
 .side-panel{
     border: 1px;
     border-radius: 10;
-    background-color: rgb(235, 235, 235);
+    background-color: rgba(235, 235, 235, 0.692);
     padding: 10px;
     margin: 5px;
     font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
