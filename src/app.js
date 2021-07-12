@@ -1143,10 +1143,12 @@
                 $team.$caption
                     .empty()
                     .append(app.utils.t(
-                        "<div class='game-team-{role}-caption'>" +
+                        "<td class='game-team-{role}-caption'>" +
                             "<span class='game-team-name'>{name}</span> " +
+                        "</td>" +
+                        "<td>"+
                             "<span class='game-team-role game-team-role-{role}'>{roleName}</span>" +
-                        "</div>", {
+                        "</td", {
                             role: role,
                             roleName: team.role === GameApi.GameTeamRole.police ? "полиция" : "мошенники",
                             name: team.name
