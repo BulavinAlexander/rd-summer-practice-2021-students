@@ -1069,7 +1069,7 @@
                 this.game.$gameCaption
                     .empty()
                     .append($(app.utils.t(
-                        "<div class='game-caption-name'>{name} <span class='game-caption-status game-caption-status-{status}'>{statusName}</span></div>",
+                        "<div class='TitleGameClass HeaderTextColor'><span id ='GameCaptionId'>{name}</span><span id='GameStatusId'>{status}</span></div>",
                         {name: name, status: status, statusName: app.utils.getStatusName(status)})));
             };
             GameView.prototype.setTimer = function (data) {
@@ -1183,6 +1183,70 @@
                  *    this.state.getPlayer(currentUserId) - пользователь в игре?
                  *    this.btns - кнопки тут
                  */
+                 status = status || this.state.status;
+                 var btns = this.btns;
+                 var user = this.state.gameApi.questor.user.id;
+
+                 if (user === this.state.owner.id)
+                 var owner = currentUser === this.state.owner.id.isOwner;
+
+                 var admin = this.state.gameApi.questor.user.isAdmin;
+
+                 if (status === GameApi.GameStatus.canceled || status === GameApi.GameStatus.finished) { //если игра закрыта или окончена
+                     btns.$btnStart.addClass("hidden");
+                     btns.$btnLeave.addClass("hidden");
+                     btns.$btnPause.addClass("hidden");
+                     btns.$btnCancel.addClass("hidden");
+                     btns.$btnConnect.addClass("hidden");
+                     btns.$btnConnectThief.addClass("hidden");
+                     btns.$btnConnectPolice.addClass("hidden");
+                     return;
+                 }
+ 
+                 if (this.state.status === GameApi.GameStatus.open ||
+                     this.state.status === GameApi.GameStatus.ready) {
+                     btns.$btnPause.addClass("hidden");
+                     if (owner || admin) {
+                         btns.$btnStart.removeClass("hidden");
+                         btns.$btnCancel.removeClass("hidden");
+                     }else {
+                        btns.$btnStart.addClass("hidden");
+                    }
+                 }
+
+                 if (this.state.status === GameApi.GameStatus.starting ||
+                     this.state.status === GameApi.GameStatus.inProcess) {
+                     btns.$btnStart.addClass("hidden");
+                     btns.$btnLeave.removeClass("hidden");
+                     btns.$btnConnect.addClass("hidden");
+                     btns.$btnConnectThief.addClass("hidden");
+                     btns.$btnConnectPolice.addClass("hidden");
+                     if (owner || admin) {
+                         btns.$btnPause.removeClass("hidden");
+                         btns.$btnCancel.removeClass("hidden");
+                     }
+                     else {
+                         btns.$btnPause.addClass("hidden");
+                         btns.$btnCancel.addClass("hidden");
+                     }
+                 }
+                 else {
+                     if (isOwner || admin) {
+                         btns.$btnStart.removeClass("hidden");
+                         btns.$btnCancel.removeClass("hidden");
+                     }
+                     else {
+                         btns.$btnStart.addClass("hidden");
+                         
+                             btns.$btnCancel.addClass("hidden");
+                        
+                     }
+                     btns.$btnPause.addClass("hidden");
+                     btns.$btnLeave.removeClass("hidden");
+                     btns.$btnConnect.addClass("hidden");
+                     btns.$btnConnectThief.addClass("hidden");
+                     btns.$btnConnectPolice.addClass("hidden");
+                 }
             };
             GameView.prototype.showLoading = function () {
                 /**
