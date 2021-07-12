@@ -11,6 +11,14 @@ div {
     background-color: #454545;
 }
 
+#map {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: white;
+    height: 500px;
+  }
+
 #TitleGameId {
     width: 100%;
     text-align: center;

@@ -871,8 +871,8 @@
                     this.setGameCaption(name, status);
                 }.bind(this));
                 
-                c.mapChanged.add(function (width, height){
-                    this.setMapCanvasSizing($mapCanvas, width, height);
+                c.mapChanged.add(function (map) {
+                    this.updateMap(map);
                 }.bind(this));
 
                 c.playerChanged.add(function (id, stats){
